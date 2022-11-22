@@ -5,109 +5,109 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema wgBase
+-- Schema wgdb2022
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema wgBase
+-- Schema wgdb2022
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `wgBase` DEFAULT CHARACTER SET utf8 ;
-USE `wgBase` ;
+CREATE SCHEMA IF NOT EXISTS `wgdb2022` DEFAULT CHARACTER SET utf8 ;
+USE `wgdb2022` ;
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Persona`
+-- Table `wgdb2022`.`Persona`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Persona` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Persona` (
   `idPersona` INT NOT NULL,
   `NamePersona` VARCHAR(45) NOT NULL,
   `LastnPersona` VARCHAR(45) NOT NULL,
   `AboutMe` VARCHAR(255) NULL,
+  `AboutMe2` VARCHAR(255) NULL,
   PRIMARY KEY (`idPersona`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Redes`
+-- Table `wgdb2022`.`Redes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Redes` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Redes` (
   `idRedes` INT NOT NULL,
-  `NameRedes` VARCHAR(45) NULL,
-  `LinkRedes` VARCHAR(100) NULL,
+  `NameRedes` VARCHAR(100) NULL,
+  `LinkRedes` VARCHAR(255) NULL,
   PRIMARY KEY (`idRedes`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Experience`
+-- Table `wgdb2022`.`Experience`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Experience` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Experience` (
   `idExperience` INT NOT NULL,
-  `NameExp` VARCHAR(45) NULL,
-  `Start` VARCHAR(10) NULL,
-  `End` VARCHAR(10) NULL,
+  `NameExp` VARCHAR(100) NULL,
+  `StartEndEx` VARCHAR(45) NULL,
+  `LinkEx` VARCHAR(255) NULL,
+  `Puesto` VARCHAR(255) NULL,
   PRIMARY KEY (`idExperience`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Education`
+-- Table `wgdb2022`.`Education`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Education` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Education` (
   `idEducation` INT NOT NULL,
-  `NameEd` VARCHAR(45) NULL,
-  `StartEd` VARCHAR(10) NULL,
-  `EndEd` VARCHAR(10) NULL,
+  `NameEd` VARCHAR(100) NULL,
+  `StartEndEd` VARCHAR(10) NULL,
   `DescriptionEd` VARCHAR(255) NULL,
-  `Educationcol` VARCHAR(45) NULL,
+  `Linked` VARCHAR(255) NULL,
   PRIMARY KEY (`idEducation`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Hard&Soft`
+-- Table `wgdb2022`.`Hard&Soft`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Hard&Soft` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Hard&Soft` (
   `idHard&Soft` INT NOT NULL,
-  `NameH&S` VARCHAR(45) NULL,
-  `ImgH&S` VARCHAR(100) NULL,
+  `NameH&S` VARCHAR(100) NULL,
   `PercentH&S` INT NULL,
   PRIMARY KEY (`idHard&Soft`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Proyects`
+-- Table `wgdb2022`.`Proyects`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Proyects` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Proyects` (
   `idProyects` INT NOT NULL,
-  `NameP` VARCHAR(45) NULL,
+  `NameP` VARCHAR(100) NULL,
   `DescritionP` VARCHAR(255) NULL,
-  `ImgP` VARCHAR(100) NULL,
+  `LinkP` VARCHAR(255) NULL,
   PRIMARY KEY (`idProyects`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`OtherPersona`
+-- Table `wgdb2022`.`OtherPersona`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`OtherPersona` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`OtherPersona` (
   `idOtherPersona` INT NOT NULL,
-  `ImgOP` VARCHAR(100) NULL,
+  `LinkOther` VARCHAR(255) NULL,
   `Persona_idPersona` INT NOT NULL,
   PRIMARY KEY (`idOtherPersona`, `Persona_idPersona`),
   INDEX `fk_OtherPersona_Persona1_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_OtherPersona_Persona1`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgBase`.`Persona` (`idPersona`)
+    REFERENCES `wgdb2022`.`Persona` (`idPersona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Persona_has_Redes`
+-- Table `wgdb2022`.`Persona_has_Redes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Redes` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Persona_has_Redes` (
   `Persona_idPersona` INT NOT NULL,
   `Redes_idRedes` INT NOT NULL,
   PRIMARY KEY (`Persona_idPersona`, `Redes_idRedes`),
@@ -115,21 +115,21 @@ CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Redes` (
   INDEX `fk_Persona_has_Redes_Persona_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_has_Redes_Persona`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgBase`.`Persona` (`idPersona`)
+    REFERENCES `wgdb2022`.`Persona` (`idPersona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Persona_has_Redes_Redes1`
     FOREIGN KEY (`Redes_idRedes`)
-    REFERENCES `wgBase`.`Redes` (`idRedes`)
+    REFERENCES `wgdb2022`.`Redes` (`idRedes`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Persona_has_Education`
+-- Table `wgdb2022`.`Persona_has_Education`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Education` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Persona_has_Education` (
   `Persona_idPersona` INT NOT NULL,
   `Education_idEducation` INT NOT NULL,
   PRIMARY KEY (`Persona_idPersona`, `Education_idEducation`),
@@ -137,21 +137,21 @@ CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Education` (
   INDEX `fk_Persona_has_Education_Persona1_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_has_Education_Persona1`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgBase`.`Persona` (`idPersona`)
+    REFERENCES `wgdb2022`.`Persona` (`idPersona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Persona_has_Education_Education1`
     FOREIGN KEY (`Education_idEducation`)
-    REFERENCES `wgBase`.`Education` (`idEducation`)
+    REFERENCES `wgdb2022`.`Education` (`idEducation`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Persona_has_Experience`
+-- Table `wgdb2022`.`Persona_has_Experience`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Experience` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Persona_has_Experience` (
   `Persona_idPersona` INT NOT NULL,
   `Experience_idExperience` INT NOT NULL,
   PRIMARY KEY (`Persona_idPersona`, `Experience_idExperience`),
@@ -159,21 +159,21 @@ CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Experience` (
   INDEX `fk_Persona_has_Experience_Persona1_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_has_Experience_Persona1`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgBase`.`Persona` (`idPersona`)
+    REFERENCES `wgdb2022`.`Persona` (`idPersona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Persona_has_Experience_Experience1`
     FOREIGN KEY (`Experience_idExperience`)
-    REFERENCES `wgBase`.`Experience` (`idExperience`)
+    REFERENCES `wgdb2022`.`Experience` (`idExperience`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Persona_has_Proyects`
+-- Table `wgdb2022`.`Persona_has_Proyects`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Proyects` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Persona_has_Proyects` (
   `Persona_idPersona` INT NOT NULL,
   `Proyects_idProyects` INT NOT NULL,
   PRIMARY KEY (`Persona_idPersona`, `Proyects_idProyects`),
@@ -181,21 +181,21 @@ CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Proyects` (
   INDEX `fk_Persona_has_Proyects_Persona1_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_has_Proyects_Persona1`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgBase`.`Persona` (`idPersona`)
+    REFERENCES `wgdb2022`.`Persona` (`idPersona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Persona_has_Proyects_Proyects1`
     FOREIGN KEY (`Proyects_idProyects`)
-    REFERENCES `wgBase`.`Proyects` (`idProyects`)
+    REFERENCES `wgdb2022`.`Proyects` (`idProyects`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wgBase`.`Persona_has_Hard&Soft`
+-- Table `wgdb2022`.`Persona_has_Hard&Soft`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Hard&Soft` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`Persona_has_Hard&Soft` (
   `Persona_idPersona` INT NOT NULL,
   `Hard&Soft_idHard&Soft` INT NOT NULL,
   PRIMARY KEY (`Persona_idPersona`, `Hard&Soft_idHard&Soft`),
@@ -203,12 +203,12 @@ CREATE TABLE IF NOT EXISTS `wgBase`.`Persona_has_Hard&Soft` (
   INDEX `fk_Persona_has_Hard&Soft_Persona1_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_has_Hard&Soft_Persona1`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgBase`.`Persona` (`idPersona`)
+    REFERENCES `wgdb2022`.`Persona` (`idPersona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Persona_has_Hard&Soft_Hard&Soft1`
     FOREIGN KEY (`Hard&Soft_idHard&Soft`)
-    REFERENCES `wgBase`.`Hard&Soft` (`idHard&Soft`)
+    REFERENCES `wgdb2022`.`Hard&Soft` (`idHard&Soft`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
