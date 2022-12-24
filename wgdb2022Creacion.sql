@@ -5,6 +5,9 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Schema wgdb2022
 -- -----------------------------------------------------
 
@@ -18,14 +21,14 @@ USE `wgdb2022` ;
 -- Table `wgdb2022`.`education`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wgdb2022`.`education` (
-  `idEducation` INT NOT NULL,
-  `NameEd` VARCHAR(100) NULL DEFAULT NULL,
-  `StartEndEd` VARCHAR(45) NULL DEFAULT NULL,
-  `DescriptionEd` VARCHAR(255) NULL DEFAULT NULL,
-  `Linked` VARCHAR(255) NULL DEFAULT NULL,
-  `Puesto` VARCHAR(255) NULL,
-  PRIMARY KEY (`idEducation`))
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NULL DEFAULT NULL,
+  `startend` VARCHAR(45) NULL DEFAULT NULL,
+  `descrip` VARCHAR(255) NULL DEFAULT NULL,
+  `link` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -33,26 +36,28 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `wgdb2022`.`experience`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wgdb2022`.`experience` (
-  `idExperience` INT NOT NULL,
-  `NameExp` VARCHAR(100) NULL DEFAULT NULL,
-  `StartEndEx` VARCHAR(45) NULL DEFAULT NULL,
-  `LinkEx` VARCHAR(255) NULL DEFAULT NULL,
-  `Puesto` VARCHAR(255) NULL DEFAULT NULL,
-  `Description` VARCHAR(255) NULL,
-  PRIMARY KEY (`idExperience`))
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NULL DEFAULT NULL,
+  `startend` VARCHAR(45) NULL DEFAULT NULL,
+  `link` VARCHAR(255) NULL DEFAULT NULL,
+  `job` VARCHAR(255) NULL DEFAULT NULL,
+  `descrip` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `wgdb2022`.`hard&soft`
+-- Table `wgdb2022`.`hardsoft`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgdb2022`.`hard&soft` (
-  `idHard&Soft` INT NOT NULL,
-  `NameH&S` VARCHAR(100) NULL DEFAULT NULL,
-  `PercentH&S` INT NULL DEFAULT NULL,
-  PRIMARY KEY (`idHard&Soft`))
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`hardsoft` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NULL DEFAULT NULL,
+  `perc` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -60,16 +65,18 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `wgdb2022`.`persona`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wgdb2022`.`persona` (
-  `idPersona` INT NOT NULL,
-  `NamePersona` VARCHAR(45) NOT NULL,
-  `LastnPersona` VARCHAR(45) NOT NULL,
-  `AboutMe` VARCHAR(255) NULL DEFAULT NULL,
-  `AboutMe2` VARCHAR(255) NULL DEFAULT NULL,
-  `Tit1` VARCHAR(100) NULL DEFAULT NULL,
-  `Tit2` VARCHAR(100) NULL DEFAULT NULL,
-  `banner` VARCHAR(255) NULL,
-  PRIMARY KEY (`idPersona`))
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `lastname` VARCHAR(45) NOT NULL,
+  `about1` VARCHAR(255) NULL DEFAULT NULL,
+  `about2` VARCHAR(255) NULL DEFAULT NULL,
+  `tit1` VARCHAR(100) NULL DEFAULT NULL,
+  `tit2` VARCHAR(100) NULL DEFAULT NULL,
+  `banner` VARCHAR(255) NULL DEFAULT NULL,
+  `link` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -84,10 +91,10 @@ CREATE TABLE IF NOT EXISTS `wgdb2022`.`persona_has_education` (
   INDEX `fk_Persona_has_Education_Persona1_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_has_Education_Education1`
     FOREIGN KEY (`Education_idEducation`)
-    REFERENCES `wgdb2022`.`education` (`idEducation`),
+    REFERENCES `wgdb2022`.`education` (`id`),
   CONSTRAINT `fk_Persona_has_Education_Persona1`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgdb2022`.`persona` (`idPersona`))
+    REFERENCES `wgdb2022`.`persona` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -103,18 +110,18 @@ CREATE TABLE IF NOT EXISTS `wgdb2022`.`persona_has_experience` (
   INDEX `fk_Persona_has_Experience_Persona1_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_has_Experience_Experience1`
     FOREIGN KEY (`Experience_idExperience`)
-    REFERENCES `wgdb2022`.`experience` (`idExperience`),
+    REFERENCES `wgdb2022`.`experience` (`id`),
   CONSTRAINT `fk_Persona_has_Experience_Persona1`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgdb2022`.`persona` (`idPersona`))
+    REFERENCES `wgdb2022`.`persona` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `wgdb2022`.`persona_has_hard&soft`
+-- Table `wgdb2022`.`persona_has_hardsoft`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgdb2022`.`persona_has_hard&soft` (
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`persona_has_hardsoft` (
   `Persona_idPersona` INT NOT NULL,
   `Hard&Soft_idHard&Soft` INT NOT NULL,
   PRIMARY KEY (`Persona_idPersona`, `Hard&Soft_idHard&Soft`),
@@ -122,24 +129,26 @@ CREATE TABLE IF NOT EXISTS `wgdb2022`.`persona_has_hard&soft` (
   INDEX `fk_Persona_has_Hard&Soft_Persona1_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_has_Hard&Soft_Hard&Soft1`
     FOREIGN KEY (`Hard&Soft_idHard&Soft`)
-    REFERENCES `wgdb2022`.`hard&soft` (`idHard&Soft`),
+    REFERENCES `wgdb2022`.`hardsoft` (`id`),
   CONSTRAINT `fk_Persona_has_Hard&Soft_Persona1`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgdb2022`.`persona` (`idPersona`))
+    REFERENCES `wgdb2022`.`persona` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `wgdb2022`.`proyects`
+-- Table `wgdb2022`.`proyect`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgdb2022`.`proyects` (
-  `idProyects` INT NOT NULL,
-  `NameP` VARCHAR(100) NULL DEFAULT NULL,
-  `DescritionP` VARCHAR(255) NULL DEFAULT NULL,
-  `LinkP` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`idProyects`))
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`proyect` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `link` VARCHAR(255) NULL DEFAULT NULL,
+  `name` VARCHAR(100) NULL DEFAULT NULL,
+  `descrip` VARCHAR(255) NULL DEFAULT NULL,
+  `linkproy` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -154,41 +163,56 @@ CREATE TABLE IF NOT EXISTS `wgdb2022`.`persona_has_proyects` (
   INDEX `fk_Persona_has_Proyects_Persona1_idx` (`Persona_idPersona` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_has_Proyects_Persona1`
     FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgdb2022`.`persona` (`idPersona`),
+    REFERENCES `wgdb2022`.`persona` (`id`),
   CONSTRAINT `fk_Persona_has_Proyects_Proyects1`
     FOREIGN KEY (`Proyects_idProyects`)
-    REFERENCES `wgdb2022`.`proyects` (`idProyects`))
+    REFERENCES `wgdb2022`.`proyect` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `wgdb2022`.`redes`
+-- Table `wgdb2022`.`rol`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgdb2022`.`redes` (
-  `idRedes` INT NOT NULL,
-  `FotoRedes` VARCHAR(255) NULL DEFAULT NULL,
-  `LinkRedes` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`idRedes`))
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`rol` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `rol_name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `wgdb2022`.`persona_has_redes`
+-- Table `wgdb2022`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wgdb2022`.`persona_has_redes` (
-  `Persona_idPersona` INT NOT NULL,
-  `Redes_idRedes` INT NOT NULL,
-  PRIMARY KEY (`Persona_idPersona`, `Redes_idRedes`),
-  INDEX `fk_Persona_has_Redes_Redes1_idx` (`Redes_idRedes` ASC) VISIBLE,
-  INDEX `fk_Persona_has_Redes_Persona_idx` (`Persona_idPersona` ASC) VISIBLE,
-  CONSTRAINT `fk_Persona_has_Redes_Persona`
-    FOREIGN KEY (`Persona_idPersona`)
-    REFERENCES `wgdb2022`.`persona` (`idPersona`),
-  CONSTRAINT `fk_Persona_has_Redes_Redes1`
-    FOREIGN KEY (`Redes_idRedes`)
-    REFERENCES `wgdb2022`.`redes` (`idRedes`))
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `user_name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UK_lqjrcobrh9jc8wpcar64q1bfh` (`user_name` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `wgdb2022`.`user_rol`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wgdb2022`.`user_rol` (
+  `user_id` INT NOT NULL,
+  `rol_id` INT NOT NULL,
+  PRIMARY KEY (`user_id`, `rol_id`),
+  INDEX `FKpfraq7jod5w5xd3sxm3m6y1o` (`rol_id` ASC) VISIBLE,
+  CONSTRAINT `FKkijwolbkui74em8ip1i6vniu4`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `wgdb2022`.`user` (`id`),
+  CONSTRAINT `FKpfraq7jod5w5xd3sxm3m6y1o`
+    FOREIGN KEY (`rol_id`)
+    REFERENCES `wgdb2022`.`rol` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
